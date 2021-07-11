@@ -1,0 +1,28 @@
+---
+# Ansible playbook task
+- name: domingospinto-192093
+  hosts: hostmachine_1
+  tasks:
+    - name: install postgresql and nginx
+      become: yes
+      become_user: root
+      apt:
+        pkg:
+          - postgresql
+          - nginx
+        state: present
+        update_cache: yes
+    - name: directory creation
+      become_user: root
+      file: path=/home/ubuntu/domingos192093 state=directory mode=0755
+    - name: user creation
+      become_user: root
+      user:
+        name: domingos
+        state: present
+        password: $6$zNLer9Yz.hxJKv7A$rmyFd4M2kRQqddrKioe3AlSzYQONQuYWlTmPt/OyInHVSHs4r40Hfwh6Dul8XrjwYNXG5QaDisyr5jnMW8E33/
+    - name: uninstall nano
+      become_user: root
+      apt:
+        pkg: nano
+        state: absent
